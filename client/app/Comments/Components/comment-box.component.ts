@@ -10,9 +10,11 @@ import { CommentService } from '../services/comment.service';
     selector: 'comment-box',
     template: `
         <div class="panel panel-default">
-            <div class="panel-heading">{{comment.author}}</div>
+            <div class="panel-heading">{{comment.name}}</div>
             <div class="panel-body">
-                {{comment.text}}
+              Cuisine: {{comment.cuisine}}<br>
+              Borough: {{comment.borough}}<br>
+             
             </div>
             <div class="panel-footer">
                 <button class="btn btn-info" (click)="editComment()"><span class="glyphicon glyphicon-edit"></span></button>

@@ -16,12 +16,13 @@ import { Comment } from '../model/comment'
         <form (ngSubmit)="submitComment()">
             <div class="form-group">
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user"></span></span>
-                    <input type="text" class="form-control" placeholder="Author" [(ngModel)]="model.author" name="author">
+                    <span class="input-group-addon" id="basic-addon1"></span>
+                    <input type="text" class="form-control" placeholder="Name" [(ngModel)]="model.name" name="name">
+                    <input type="text" class="form-control" placeholder="Cuisine" [(ngModel)]="model.cuisine" name="cuisine">
+                    <input type="text" class="form-control" placeholder="Borough" [(ngModel)]="model.borough" name="borough">
+                    
                 </div>
-                <br />
-                <textarea class="form-control" rows="3" placeholder="Text" [(ngModel)]="model.text" name="text"></textarea>
-                <br />
+                
                 <button *ngIf="!editing" type="submit" class="btn btn-primary btn-block">Add</button>
                 <button *ngIf="editing" type="submit" class="btn btn-warning btn-block">Update</button>
             </div>
@@ -36,7 +37,7 @@ export class CommentFormComponent implements OnChanges {
         private commentService: CommentService
         ){}
     // Local properties
-    private model = new Comment(new Date(), '', '');
+    private model = new Comment('', '', '');
     private editing = false;
     
     // Input properties
@@ -50,7 +51,9 @@ export class CommentFormComponent implements OnChanges {
 
         if(!this.editing){
             // Create a new comment
+            console.log(this.model);
             commentOperation = this.commentService.addComment(this.model)
+
         } else {
             // Update an existing comment
              commentOperation = this.commentService.updateComment(this.model)
@@ -62,7 +65,7 @@ export class CommentFormComponent implements OnChanges {
                                     // Emit list event
                                     EmitterService.get(this.listId).emit(comments);
                                     // Empty model
-                                    this.model = new Comment(new Date(), '', '');
+                                    this.model = new Comment('', '','');
                                     // Switch editing status
                                     if(this.editing) this.editing = !this.editing;
                                 }, 

@@ -14,7 +14,7 @@ export class CommentService {
      // Resolve HTTP using the constructor
      constructor (private http: Http) {}
      // private instance variable to hold base url
-     private commentsUrl = 'http://localhost:3000/api/comments';
+     private commentsUrl = 'https://helio-restaurants.mod.bz/v1/restaurants';
     // private commentsUrl = 'http://578f454de2fa491100415d08.mockapi.io/api/Comment'; 
      
      // Fetch all existing comments
@@ -29,7 +29,7 @@ export class CommentService {
      }
 
      // Add a new comment
-    addComment (body: Object): Observable<Comment[]> {
+    addComment (body: any): Observable<Comment[]> {
         let bodyString = JSON.stringify(body); // Stringify payload
         let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
         let options = new RequestOptions({ headers: headers }); // Create a request option
@@ -40,12 +40,16 @@ export class CommentService {
     }   
 
     // Update a comment
-    updateComment (body: Object): Observable<Comment[]> {
+    updateComment (body: any): Observable<Comment[]> {
         let bodyString = JSON.stringify(body); // Stringify payload
         let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
         let options = new RequestOptions({ headers: headers }); // Create a request option
 
-        return this.http.put(`${this.commentsUrl}/${body['id']}`, body, options) // ...using put request
+        const id = body._id;
+        delete body._id;
+        delete body.restaurant_id;
+
+        return this.http.put(`${this.commentsUrl}/${id}`, body, options) // ...using put request
                          .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
                          .catch((error:any) => Observable.throw(error.json().error || 'Server error')); //...errors if any
     }   

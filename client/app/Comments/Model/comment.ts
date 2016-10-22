@@ -1,8 +1,13 @@
 /* * * ./app/comments/model/comment.ts * * */
 export class Comment {
+
+          public id: string;
+          
     constructor(
-        public id: Date, 
-        public author: string, 
-        public text:string
+        public name: string, 
+        public cuisine:string,
+        public borough:string
+       
+      
         ){}
 }
